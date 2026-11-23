@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FlavorForge | FridgeRescue Hack</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- Sticky Header -->
+   <!--This section creates the top navigation area of the website.-->
+  <header class="app-header">
+    <div class="container header-inner">
+      <div class="brand-wrapper">
+        <div class="logo-badge">🔥</div>
+        <div class="brand-info">
+          <h1>Flavor<span>Forge</span></h1>
+          <p>Zero-Waste Refrigerator Rescue</p>
+        </div>
+      </div>
+
+      <div class="header-actions">
+        <button id="aiChefBtn" class="btn btn-accent" title="AI Chef Recipe Improviser">
+          <span>✨</span>
+          <span>AI Chef Improviser</span>
+        </button>
+
+        <button id="savedRecipesFilterBtn" class="btn btn-outline" title="View Bookmarked Favorites">
+          <span>❤️</span>
+          <span>Saved (<span id="savedCountHeader">0</span>)</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hackathon Quick-Demo Presets Bar -->
+   <!--This section provides predefined ingredient combinations for demonstrations-->
+  <aside class="demo-bar">
+    <div class="container demo-bar-inner">
+      <div class="demo-title">
+        <span>⚡ Hackathon Demo Presets:</span>
+      </div>
+      <div class="demo-buttons">
+        <button id="demo1Btn" class="demo-chip" title="Tests Aloo Egg Bhurji 100% & Spanish Omelette 85% with Butter sub">
+          🥚🥔🧅 Eggs + Potatoes + Onions
+        </button>
+        <button id="demo2Btn" class="demo-chip" title="Tests Egg Toast 100%">
+          🥚🧅🍞 Egg + Onion + Bread
+        </button>
+        <button id="demo3Btn" class="demo-chip" title="Tests Garlic Butter Rice 100%">
+          🍚🧄🧈 Rice + Garlic + Butter
+        </button>
+        <button id="demoClearBtn" class="demo-chip" style="border-color: #cbd5e1; color: #64748b;">
+          🔄 Reset Pantry
+        </button>
+      </div>
+    </div>
+  </aside>
+
+  <main class="container">
+    <!-- Hero Intro -->
+     <!--This is the introductory section of the website.
+
+It explains the main purpose of FlavorForge to users.-->
+    <section class="hero-section">
+      <h2>Turn Fridge Leftovers Into Meals</h2>
+      <p>Select what you have in your fridge or pantry. FlavorForge matches recipes by ingredient overlap, provides 1-click kitchen substitutes, and guides your cooking hands-free.</p>
+    </section>
+
+    <!-- Pantry & Fridge Inventory Selector -->
+     <!--This is one of the most important sections of the application.
+
+It allows users to select ingredients available in their kitchen.-->
+    <section class="inventory-panel">
+      <div class="inventory-header">
+        <div class="inventory-title-group">
+          <h3><span>🧊</span> Fridge & Pantry Inventory</h3>
+          <p>Tap common items or type custom ingredients below</p>
+        </div>
+        <!--This input allows users to enter ingredients manually.-->
+
+        <div class="inventory-search-box">
+          <span class="search-icon">🔍</span>
+          <input type="text" id="customIngredientInput" placeholder="Add custom item (e.g. spinach, cheese)..." autocomplete="off">
+        </div>
+      </div>
+
+      <!-- Category Filter Tabs -->
+      <div class="category-tabs" id="categoryTabs">
+        <!-- Rendered by JS -->
+      </div>
+
+      <!-- Quick-Tap Staples Grid -->
+      <div class="staples-grid" id="staplesGrid">
+        <!-- Rendered by JS -->
+      </div>
+
+      <!-- Active Selected Pantry Bar -->
+      <div class="active-pantry-section" id="activePantrySection">
+        <div class="active-pantry-header">
+          <h4>
+            <span>🧺</span>
+            <!--Users can also click the Clear All button to remove their selections.-->
+            <span>Your Selected Items (<span id="selectedCount">0</span>)</span>
+          </h4>
+          <button id="clearAllPantryBtn" class="clear-pantry-btn">Clear all</button>
+        </div>
+
+        <div class="active-pantry-chips" id="activePantryChips">
+          <p style="font-size: 13px; color: var(--slate-400); font-style: italic;">No items selected yet. Tap staples above or search to start matching!</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Control & Filter Bar -->
+    <section class="control-bar">
+      <div class="filter-pills-group" id="filterPillsGroup">
+        <button class="filter-pill active" data-filter="all">All Recipes</button>
+        <button class="filter-pill" data-filter="100match">🎯 100% Match Only</button>
+        <button class="filter-pill" data-filter="quick">⚡ Under 20 Mins</button>
+        <button class="filter-pill" data-filter="veg">🌱 Vegetarian Only</button>
+        <button class="filter-pill" data-filter="expiring">🚨 Prioritize Expiring</button>
+        <button class="filter-pill" data-filter="saved">❤️ Saved Favorites</button>
+      </div>
+
+      <div class="sort-group">
+        <label for="recipeSortSelect" class="sort-label">Sort by:</label>
+        <select id="recipeSortSelect" class="sort-select">
+          <option value="match-desc">Highest Match %</option>
+          <option value="expiring-desc">Expiring Rescued First</option>
+          <option value="time-asc">Fastest Cooking Time</option>
+          <option value="calories-asc">Lowest Calories</option>
+          <option value="name-asc">Recipe Name (A-Z)</option>
+        </select>
+      </div>
+    </section>
+
+    <!-- Results Status Meta -->
+    <div class="results-meta">
+      <div class="results-count" id="resultsCount">
+        Showing <span>0</span> recipes
+      </div>
+    </div>
+
+    <!-- Recipe Cards Grid -->
+    <section class="recipes-grid" id="recipesGrid">
+      <!-- Rendered dynamically by JS -->
+    </section>
+  </main>
+
+  <!-- Recipe Detail & Walkthrough Modal -->
+  <div class="modal-overlay" id="recipeModalOverlay">
+    <div class="modal-content">
+      <button class="modal-close-btn" id="modalCloseBtn" title="Close Walkthrough">✕</button>
+
+      <div id="modalRecipeContent">
+        <!-- Rendered dynamically by JS -->
+      </div>
+    </div>
+  </div>
+
+  <!-- AI Chef Improviser Modal -->
+  <div class="modal-overlay" id="aiChefModalOverlay">
+    <div class="modal-content">
+      <button class="modal-close-btn" id="aiModalCloseBtn" title="Close AI Chef">✕</button>
+
+      <div style="margin-bottom: 20px;">
+        <h2 style="font-size: 22px; font-weight: 800; color: var(--dark); display: flex; align-items: center; gap: 8px;">
+          <span>✨</span> AI Chef Recipe Improviser
+        </h2>
+        <p style="font-size: 13px; color: var(--slate-600);">
+          Got quirky or unusual leftover combinations? Let the AI Chef invent a safe, delicious zero-waste recipe on the fly!
+        </p>
+      </div>
+
+      <div class="ai-form-group">
+        <label>Selected Rescue Pantry Items:</label>
+        <div id="aiPantryPreview" style="font-size: 13px; color: var(--slate-700); background: var(--slate-50); border: 1px solid var(--slate-200); padding: 8px 12px; border-radius: var(--radius-md); margin-bottom: 8px;">
+          (Select ingredients in the pantry selector to include them)
+        </div>
+      </div>
+
+      <div class="ai-form-group">
+        <label for="aiChefCustomNote">Custom Preference / Craving (Optional):</label>
+        <input type="text" id="aiChefCustomNote" placeholder="e.g. spicy breakfast, comforting soup, kid-friendly snack...">
+      </div>
+
+      <div class="ai-form-group">
+        <label for="geminiApiKeyInput">Gemini API Key (Optional for cloud LLM generation; leaves empty for instant built-in engine):</label>
+        <input type="password" id="geminiApiKeyInput" placeholder="Enter Gemini API key or leave blank for instant local AI">
+      </div>
+
+      <button id="generateAiRecipeBtn" class="btn btn-accent" style="width: 100%; padding: 12px; font-size: 15px; margin-bottom: 20px;">
+        <span>🪄</span> Generate Rescue Recipe Now
+      </button>
+
+      <!-- AI Result Area -->
+      <div id="aiResultCard" style="display: none; background: var(--slate-50); border: 1px solid var(--slate-200); border-radius: var(--radius-lg); padding: 20px;">
+        <!-- Filled dynamically -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification Outlet -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <!-- Module Entrypoint -->
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>
